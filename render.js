@@ -10,8 +10,10 @@ var objectList = []
 
 var mainGamma = 0
 var mainPhi = 0
+var cameraVector = [0,0,0]
 
 const screenArray = new Uint8ClampedArray(xSize*ySize*4)
+const occlusionMask = new Array(xSize*ySize*4)
 
 
 function prepareRender(){
@@ -20,6 +22,9 @@ function prepareRender(){
 
 function callRender(){
   rotationMatrix = generateRotationalMatrix(mainGamma,mainPhi)
+  for(var objectID = 0; objectID<objectList.length; objectID++){
+    renderTriangles(objectList[objectID],objectID)
+  }
 }
 
 
@@ -55,4 +60,20 @@ function rotateVertices(rotationalMatrix, position, offsets){
   rotationalMatrix[2][1]*position[1]+
   rotationalMatrix[2][2]*position[2]
   return finalPosition
+}
+
+function renderTriangles(hostObject,objectID){
+  var tempVertices = []
+  var ab = [0,0,0]
+  var ac = [0,0,0]
+  for(var vertCount = 0; vertCount<hostObject.vertices.length; vertCount++){
+    tempVertices.append(rotateVertices(rotationMatrix,hostObject.vertices[],cameraOffset))
+  }  
+  for(var triCount = 0; triCount<hostObject.vertices.length; triCount++){
+    if((hostObject.normals[0]*cameraVector[0] > 0)||
+      (hostObject.normals[1]*cameraVector[1] > 0)||
+      (hostObject.normals[2]*cameraVector[2] > 0)||){
+      
+    }
+  }
 }
