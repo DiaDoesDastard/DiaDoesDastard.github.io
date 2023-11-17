@@ -8,8 +8,8 @@ var zoom = 0
 var rotationMatrix = new Array(3,3)
 var objectList = []
 
-var mainGamma = 0
-var mainPhi = 0
+var mainGamma = 45
+var mainPhi = 20
 var cameraVector = [0,0,0]
 
 const screenArray = new Uint8ClampedArray(xSize*ySize*4)
@@ -21,14 +21,28 @@ function prepareRender(){
 }
 
 function callRender(){
-  
+  screenArray.fill(0)
+  occlusionMask.fill(-1)
   rotationMatrix = generateRotationalMatrix(mainGamma,mainPhi)
   for(var objectID = 0; objectID<objectList.length; objectID++){
     renderTriangles(objectList[objectID],objectID)
   }
+  renderScreen()
+  let imageData = new ImageData(screenArray, xSize);
+  ctx.putImageData(imageData,0,0)
 }
 
-
+function renderScreen(){
+  for(var index = 0; index<screenArray.length;index+=4){
+    if(occlusionMask[index + 1][0] != 1){
+      screenArray[index + 0] =  occlusionMask[index + 0]
+      screenArray[index + 1] =  occlusionMask[index + 0]
+      screenArray[index + 2] =  occlusionMask[index + 0]
+      screenArray[index + 3] =  255
+    }
+    
+  }
+}
 
 
 function generateRotationalMatrix(gamma,phi){
@@ -98,7 +112,7 @@ function renderTriangles(pointA, pointB, pointC,objectID,triangleID){
       if(targetPoint[0]<0&&xSize<targetPoint[0]&&targetPoint[1]<0&&ySize<targetPoint[1]){
         targetPoint[2] = pointA[2]+iScalar*abVector[2]+jScalar*acVector[2]
         targetCoord = (xSize*ySize*4)
-        if(occlusionMask[targetCoord + 0] > targetPoint[2] || occlusionMask[targetCoord + 1] == -1){
+        if(occlusionMask[targetCoord + 0] > targetPoint[2] || occlusionMask[targetCoord + 1][0] == -1){
           occlusionMask[targetCoord + 0] = targetPoint[2]
           occlusionMask[targetCoord + 1] = [objectID,triangleID]
           occlusionMask[targetCoord + 2] = [iScalar,jScalar]          
