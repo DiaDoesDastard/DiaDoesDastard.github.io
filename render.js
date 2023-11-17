@@ -31,7 +31,6 @@ function callRender(){
 
 
 
-
 function generateRotationalMatrix(gamma,phi){
   var rotationalMatrix = new Array(3,3);
 
