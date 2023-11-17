@@ -25,4 +25,5 @@ function gameObject(position = [0,0,0], vertices = [[2,2,2]], triangles[[0]]){
     }
   }
   generateNormals()
+  objectList.append(this)
 }

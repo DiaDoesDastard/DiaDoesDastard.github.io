@@ -15,6 +15,14 @@ var cameraVector = [0,0,0]
 const screenArray = new Uint8ClampedArray(xSize*ySize*4)
 const occlusionMask = new Array(xSize*ySize*4)
 
+const cube = gameObject([0,0,0],
+                       [[1,1,1],[-1,1,1],[-1,-1,1],[1,-1,1],
+                        [1,1,-1],[-1,1,-1],[-1,-1,-1],[1,-1,-1]],
+                       [[0,1,2],[2,3,0],[4,5,6],[6,7,4],
+                       [0,4,5],[5,1,0],[2,6,7],[7,3,2],
+                       [3,7,4],[4,0,3],[1,5,6],[6,2,1]])
+
+callRender()
 
 function prepareRender(){
   
@@ -23,6 +31,9 @@ function prepareRender(){
 function callRender(){
   screenArray.fill(0)
   occlusionMask.fill(-1)
+  cameraVector = [Math.cos(mainGamma*Math.PI/180), 
+                  Math.sin(mainGamma*Math.PI/180),
+                  Math.cos(mainPhi*Math.PI/180)]
   rotationMatrix = generateRotationalMatrix(mainGamma,mainPhi)
   for(var objectID = 0; objectID<objectList.length; objectID++){
     renderTriangles(objectList[objectID],objectID)
