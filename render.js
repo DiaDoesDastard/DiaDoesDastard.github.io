@@ -21,6 +21,7 @@ function prepareRender(){
 }
 
 function callRender(){
+  
   rotationMatrix = generateRotationalMatrix(mainGamma,mainPhi)
   for(var objectID = 0; objectID<objectList.length; objectID++){
     renderTriangles(objectList[objectID],objectID)
@@ -62,7 +63,7 @@ function rotateVertices(rotationalMatrix, position, offsets){
   return finalPosition
 }
 
-function renderTriangles(hostObject,objectID){
+function renderObject(hostObject,objectID){
   var tempVertices = []
   var ab = [0,0,0]
   var ac = [0,0,0]
@@ -73,7 +74,37 @@ function renderTriangles(hostObject,objectID){
     if((hostObject.normals[0]*cameraVector[0] > 0)||
       (hostObject.normals[1]*cameraVector[1] > 0)||
       (hostObject.normals[2]*cameraVector[2] > 0)||){
+      renderTriangle(tempVertices[triangles[triCount][0]],
+                    tempVertices[triangles[triCount][1]],
+                    tempVertices[triangles[triCount][2]],
+                    objectID,
+                    triCount)
       
+    }
+  }
+}
+
+function renderTriangles(pointA, pointB, pointC,objectID,triangleID){
+  var abVector = [pointB[0]-pointA[0],pointB[1]-pointA[1],pointB[2]-pointA[2]]
+  var abDistance = Math.sqrt((abVector[0])**2+(abVector[1])**2+(abVector[2])**2)
+  var acVector = [pointC[0]-pointA[0],pointC[1]-pointA[1],pointC[2]-pointA[2]]
+  var acDistance = Math.sqrt((acVector[0])**2+(acVector[1])**2+(acVector[2])**2)
+  var targetCoord = 0
+  pointA = [pointA[0]+xSize/2,pointA[1]+ySize/2,pointA[2]]
+  var targetPoint = [0,0,0] 
+  for(iScalar = 0; iScalar<1; iScalar += (1/abDistance)){
+    for(jScalar = 0; jScalar+iScalar<=1; jScalar += (1/acDistance)){
+      targetPoint = [pointA[0]+iScalar*abVector[0]+jScalar*acVector[0],
+                    pointA[1]+iScalar*abVector[1]+jScalar*acVector[1]]
+      if(targetPoint[0]<0&&xSize<targetPoint[0]&&targetPoint[1]<0&&ySize<targetPoint[1]){
+        targetPoint[2] = pointA[2]+iScalar*abVector[2]+jScalar*acVector[2]
+        targetCoord = (xSize*ySize*4)
+        if(occlusionMask[targetCoord + 0] > targetPoint[2] || occlusionMask[targetCoord + 1] == -1){
+          occlusionMask[targetCoord + 0] = targetPoint[2]
+          occlusionMask[targetCoord + 1] = [objectID,triangleID]
+          occlusionMask[targetCoord + 2] = [iScalar,jScalar]          
+        }
+      }
     }
   }
 }
