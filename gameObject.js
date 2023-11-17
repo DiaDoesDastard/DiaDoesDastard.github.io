@@ -1,4 +1,4 @@
-function gameObject(position = [0,0,0], vertices = [[2,2,2]], triangles[[0]]){
+function gameObject(position = [0,0,0], vertices = [[2,2,2]], triangles = [[0]]){
   this.position = position
   this.triangles = triangles
   this.vertices = vertices
