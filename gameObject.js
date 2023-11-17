@@ -9,6 +9,9 @@ function gameObject(position = [0,0,0], vertices = [[2,2,2]], triangles = [[0]])
     var ac = [0,0,0]
     var tempNormal = [0,0,0]
     for(var triangleCounter = 0; triangleCounter<this.triangles.length; triangleCounter++){
+      //console.log(triangleCounter)
+      //console.log(triangles[triangleCounter][1])
+      //console.log(vertices[triangles[triangleCounter][1]])
       ab[0] = vertices[triangles[triangleCounter][1]][0]-vertices[triangles[triangleCounter][0]][0]
       ab[1] = vertices[triangles[triangleCounter][1]][1]-vertices[triangles[triangleCounter][0]][1]
       ab[2] = vertices[triangles[triangleCounter][1]][2]-vertices[triangles[triangleCounter][0]][2]
@@ -17,11 +20,19 @@ function gameObject(position = [0,0,0], vertices = [[2,2,2]], triangles = [[0]])
       ac[1] = vertices[triangles[triangleCounter][2]][1]-vertices[triangles[triangleCounter][0]][1]
       ac[2] = vertices[triangles[triangleCounter][2]][2]-vertices[triangles[triangleCounter][0]][2]
 
-      tempNormal[0] = ab[2]*ac[3]-ab[3]*ac[2]
-      tempNormal[1] = ab[1]*ac[3]-ab[3]*ac[1]
-      tempNormal[2] = ab[1]*ac[2]-ab[2]*ac[1]
+      //console.log(ab)
+      //console.log(ac)
       
-      this.normals.push(tempNormal)
+      tempNormal[0] = ab[1]*ac[2]-ab[2]*ac[1]
+      tempNormal[1] = ab[0]*ac[2]-ab[2]*ac[0]
+      tempNormal[2] = ab[0]*ac[1]-ab[1]*ac[0]
+
+      //console.log(tempNormal)
+      //console.log("weh")
+      
+      this.normals.push([ab[1]*ac[2]-ab[2]*ac[1],
+                         ab[0]*ac[2]-ab[2]*ac[0],
+                         ab[0]*ac[1]-ab[1]*ac[0]])
     }
   }
   this.generateNormals()
