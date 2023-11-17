@@ -21,9 +21,9 @@ function gameObject(position = [0,0,0], vertices = [[2,2,2]], triangles = [[0]])
       tempNormal[1] = ab[1]*ac[3]-ab[3]*ac[1]
       tempNormal[2] = ab[1]*ac[2]-ab[2]*ac[1]
       
-      this.normals.append(tempNormal)
+      this.normals.push(tempNormal)
     }
   }
-  generateNormals()
-  objectList.append(this)
+  this.generateNormals()
+  objectList.push(this)
 }

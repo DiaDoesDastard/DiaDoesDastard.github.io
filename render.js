@@ -11,11 +11,12 @@ var objectList = []
 var mainGamma = 45
 var mainPhi = 20
 var cameraVector = [0,0,0]
+var cameraOffset = [0,0,0]
 
 const screenArray = new Uint8ClampedArray(xSize*ySize*4)
 const occlusionMask = new Array(xSize*ySize*4)
 
-const cube = gameObject([0,0,0],
+const cube = new gameObject([0,0,0],
                        [[1,1,1],[-1,1,1],[-1,-1,1],[1,-1,1],
                         [1,1,-1],[-1,1,-1],[-1,-1,-1],[1,-1,-1]],
                        [[0,1,2],[2,3,0],[4,5,6],[6,7,4],
@@ -36,7 +37,7 @@ function callRender(){
                   Math.cos(mainPhi*Math.PI/180)]
   rotationMatrix = generateRotationalMatrix(mainGamma,mainPhi)
   for(var objectID = 0; objectID<objectList.length; objectID++){
-    renderTriangles(objectList[objectID],objectID)
+    renderObject(objectList[objectID],objectID)
   }
   renderScreen()
   let imageData = new ImageData(screenArray, xSize);
@@ -45,7 +46,8 @@ function callRender(){
 
 function renderScreen(){
   for(var index = 0; index<screenArray.length;index+=4){
-    if(occlusionMask[index + 1][0] != 1){
+    if(occlusionMask[index + 1][0] >= 0){
+      console.log(occlusionMask[index + 1])
       screenArray[index + 0] =  occlusionMask[index + 0]
       screenArray[index + 1] =  occlusionMask[index + 0]
       screenArray[index + 2] =  occlusionMask[index + 0]
@@ -65,7 +67,7 @@ function generateRotationalMatrix(gamma,phi){
   rotationalMatrix = [
     [Math.cos(gamma), 0, -Math.sin(gamma)],
     [-Math.sin(gamma)*Math.sin(phi), Math.cos(phi), -Math.cos(gamma)*Math.sin(phi)],
-    [Math.sin(gamma)*Math.cos(phi), Math.phi(phi), Math.cos(gamma)*Math.cos(phi)]
+    [Math.sin(gamma)*Math.cos(phi), Math.sin(phi), Math.cos(gamma)*Math.cos(phi)]
   ]
   return rotationalMatrix
 }
@@ -92,12 +94,12 @@ function renderObject(hostObject,objectID){
   var ab = [0,0,0]
   var ac = [0,0,0]
   for(var vertCount = 0; vertCount<hostObject.vertices.length; vertCount++){
-    tempVertices.append(rotateVertices(rotationMatrix,hostObject.vertices[],cameraOffset))
+    tempVertices.push(rotateVertices(rotationMatrix,hostObject.vertices[vertCount],cameraOffset))
   }  
   for(var triCount = 0; triCount<hostObject.vertices.length; triCount++){
     if((hostObject.normals[0]*cameraVector[0] > 0)||
       (hostObject.normals[1]*cameraVector[1] > 0)||
-      (hostObject.normals[2]*cameraVector[2] > 0)||){
+      (hostObject.normals[2]*cameraVector[2] > 0)){
       renderTriangle(tempVertices[triangles[triCount][0]],
                     tempVertices[triangles[triCount][1]],
                     tempVertices[triangles[triCount][2]],
@@ -108,7 +110,7 @@ function renderObject(hostObject,objectID){
   }
 }
 
-function renderTriangles(pointA, pointB, pointC,objectID,triangleID){
+function renderTriangle(pointA, pointB, pointC,objectID,triangleID){
   var abVector = [pointB[0]-pointA[0],pointB[1]-pointA[1],pointB[2]-pointA[2]]
   var abDistance = Math.sqrt((abVector[0])**2+(abVector[1])**2+(abVector[2])**2)
   var acVector = [pointC[0]-pointA[0],pointC[1]-pointA[1],pointC[2]-pointA[2]]
@@ -120,7 +122,7 @@ function renderTriangles(pointA, pointB, pointC,objectID,triangleID){
     for(jScalar = 0; jScalar+iScalar<=1; jScalar += (1/acDistance)){
       targetPoint = [pointA[0]+iScalar*abVector[0]+jScalar*acVector[0],
                     pointA[1]+iScalar*abVector[1]+jScalar*acVector[1]]
-      if(targetPoint[0]<0&&xSize<targetPoint[0]&&targetPoint[1]<0&&ySize<targetPoint[1]){
+      if(targetPoint[0]>0&&xSize>targetPoint[0]&&targetPoint[1]>0&&ySize>targetPoint[1]){
         targetPoint[2] = pointA[2]+iScalar*abVector[2]+jScalar*acVector[2]
         targetCoord = (xSize*ySize*4)
         if(occlusionMask[targetCoord + 0] > targetPoint[2] || occlusionMask[targetCoord + 1][0] == -1){
