@@ -240,7 +240,7 @@ function drawTriangle(pointA,pointB,pointC,objectID,triangleID,targetMask, light
 
   var imageIndices = 0
 
-  pointA = [pointA[0]+xSize/2,pointA[1]+ySize/2,pointA[2]]
+  pointA = [pointA[0]+xSize/2,pointA[1]+ySize/1.5,pointA[2]]
   
   for(abScalar = 0; abScalar<=1; abScalar += (1/Math.floor(abDistance*resolution))){
     for(acScalar = 0; acScalar+abScalar<=1; acScalar += (1/Math.floor(acDistance*resolution))){
