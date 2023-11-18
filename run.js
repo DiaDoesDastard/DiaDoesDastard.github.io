@@ -2,6 +2,8 @@ start()
 setInterval(play,1000/60); 
 //play()
 
+const littleGuy = new spriteHandler("notlavender.png",[0,-4,0])
+
 function start(){
   //loadFromTilemap(0)
   /*
@@ -43,6 +45,7 @@ function start(){
       generatePrimative("plane",[0,0,0],"cobblestoneNot.png",[3,1,3]);  
   generatePrimative("cube",[0,-2,0],"cobblestonenewnew.png",[.5,.5,.5])
   generatePrimative("wall4",[-3.9,-1.5,0],"doorNot.png",[1,0.5,0.5])
+  
     //}
   //}
   
@@ -57,7 +60,7 @@ function play(){
   sunVector = [Math.sin(Math.PI * sunRho / 180),
                     Math.sin(Math.PI * sunPhi / 180),
                     Math.cos(Math.PI * sunRho / 180)]
-
+  littleGuy.faceCam()
   for(e = 0; e<objectList.length; e++){
     bufferObject(objectList[e], e, rotationMatrix, occlusionMask, offset);
   }  
@@ -90,6 +93,7 @@ document.onkeypress = function(evt) {
     }
     if(charStr == "e"){
       mainRho += 1;
+      console.log(mainRho)
     }
     if(charStr == "q"){
       mainRho -= 1;

@@ -13,7 +13,7 @@ var sunRho  = 225;
 var sunPhi = 10;
 var ambientLight = 30;
 var sunVector = [0,0,0]
-var sunColor = [255,255,255]
+var sunColor = [252,255,230]
 
 const occlusionMask = new Array((xSize*ySize*4));
 occlusionMask.fill(-1);
