@@ -18,7 +18,7 @@ function gameObject(textureURL = "", uvCoordanates = [[0,0]],  vertices=[[0,0,0]
     image.src = imageSource;
     image.onload = () => {
       ctx.drawImage(image, 0, 0);
-      this.textureMap = ctx.getImageData(0, 0, 80, 80).data
+      this.textureMap = ctx.getImageData(0, 0, image.width, image.width).data
       this.textureSize = image.width
     }
   }

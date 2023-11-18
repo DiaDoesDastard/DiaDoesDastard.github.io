@@ -130,7 +130,7 @@ function renderScreen(){
       uCoord = roundNumber((uvCoords[1][0]*targetIJ[0]+uvCoords[2][0]*targetIJ[1]))
 
       vCoord = roundNumber((uvCoords[1][1]*targetIJ[0]+uvCoords[2][1]*targetIJ[1]))
-      textureCoord = (vCoord*80+uCoord)*4
+      textureCoord = (vCoord*objectList[occlusionMask[i + 1]].textureSize+uCoord)*4
       imageArrays[i + 0] = targetObject.textureMap[textureCoord + 0]; // R value
       imageArrays[i + 1] = targetObject.textureMap[textureCoord + 1]; // G value
       imageArrays[i + 2] = targetObject.textureMap[textureCoord + 2]; // B value
@@ -145,12 +145,12 @@ function generatePrimative(type, position, imageURL = "lavender.png", scale=[1,1
   }
   if(type.toLowerCase() == "cube"){
     return new gameObject(imageURL,
-        [[[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
-        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
-        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
-        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
-        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
-        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]]],                
+        [[[0,0],[39,0],[39,39]],[[0,0],[0,39],[39,39]],
+         [[0,0],[39,0],[39,39]],[[0,0],[0,39],[39,39]],
+         [[0,0],[39,0],[39,39]],[[0,0],[0,39],[39,39]],
+         [[0,0],[39,0],[39,39]],[[0,0],[0,39],[39,39]],
+         [[0,0],[39,0],[39,39]],[[0,0],[0,39],[39,39]],
+         [[0,0],[39,0],[39,39]],[[0,0],[0,39],[39,39]]],                
                           [[.5,-.5,.5],[-.5,-.5,.5],[-.5,-.5,-.5],[.5,-.5,-.5],
                              [.5,.5,.5],[-.5,.5,.5],[-.5,.5,-.5],[.5,.5,-.5]],
         [[0,1,2],[2,3,0],[6,5,4],[4,7,6],[0,4,5],[5,1,0],
@@ -166,7 +166,7 @@ function generatePrimative(type, position, imageURL = "lavender.png", scale=[1,1
   }
   if(type.toLowerCase() == "wall1"){
     return new gameObject(imageURL,
-        [[[0,0],[79,0],[79,79]],[[0,0],[79,0],[79,79]]],                
+        [[[0,0],[39,0],[39,39]],[[0,0],[39,0],[39,39]]],                
         [[1,-1,1],[-1,-1,1],[-.5,-.5,-.5],[.5,-.5,-.5],
          [1,1,1],[-1,1,1],[-.5,.5,-.5],[.5,.5,-.5]],
         [[0,4,5],[5,1,0]],
@@ -174,7 +174,7 @@ function generatePrimative(type, position, imageURL = "lavender.png", scale=[1,1
   }
   if(type.toLowerCase() == "wall2"){
     return new gameObject(imageURL,
-        [[[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]]],                
+        [[[0,0],[39,0],[39,39]],[[0,0],[39,0],[39,39]]],                
         [[.5,-.5,.5],[-.5,-.5,.5],[-1,-1,-1],[1,-1,-1],
          [.5,.5,.5],[-.5,.5,.5],[-1,1,-1],[1,1,-1]],
         [[2,6,7],[7,3,2]],
@@ -182,7 +182,7 @@ function generatePrimative(type, position, imageURL = "lavender.png", scale=[1,1
   }
   if(type.toLowerCase() == "wall3"){
     return new gameObject(imageURL,
-        [[[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]]],                
+                          [[[0,0],[39,0],[39,39]],[[0,0],[39,0],[39,39]]],                
         [[.5,-.5,.5],[-1,-1,1],[-1,-1,-1],[.5,-.5,-.5],
          [.5,.5,.5],[-1,1,1],[-1,1,-1],[.5,.5,-.5]],
         [[1,5,6],[6,2,1]],
@@ -190,7 +190,7 @@ function generatePrimative(type, position, imageURL = "lavender.png", scale=[1,1
   }
   if(type.toLowerCase() == "wall4"){
     return new gameObject(imageURL,
-        [[[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]]],                
+                          [[[0,0],[39,0],[39,39]],[[0,0],[39,0],[39,39]]],                
         [[1,-1,1],[-1,-1,1],[-1,-1,-1],[1,-1,-1],
          [1,1,1],[-1,1,1],[-1,1,-1],[1,1,-1]],
         [[7,4,0],[0,3,7]],

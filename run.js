@@ -29,19 +29,19 @@ function start(){
   generatePrimative("wall3",[0,-1,0],"cinderblockNot.png")
   generatePrimative("wall4",[0,-1,0],"cinderblockNot.png")*/
   for(makerX = -2.5; makerX<3; makerX++){
-    generatePrimative("wall1",[makerX,-1.5,-3.5],"cinderblockNott.png",[.5,.5,.5]) 
+    generatePrimative("wall1",[makerX,-1.5,-3.5],"cinderblockNot.png",[.5,.5,.5]) 
   }
   for(makerX = -2.5; makerX<3; makerX++){
-    generatePrimative("wall2",[makerX,-1.5,3.5],"cinderblockNott.png",[.5,.5,.5]) 
+    generatePrimative("wall2",[makerX,-1.5,3.5],"cinderblockNot.png",[.5,.5,.5]) 
   }
   for(makerX = -2.5; makerX<3; makerX++){
-    generatePrimative("wall3",[3.5,-1.5,makerX],"cinderblockNott.png",[.5,.5,.5]) 
+    generatePrimative("wall3",[3.5,-1.5,makerX],"cinderblockNot.png",[.5,.5,.5]) 
   }
   for(makerX = -2.5; makerX<3; makerX++){
-    generatePrimative("wall4",[-3.5,-1.5,makerX],"cinderblockNott.png",[.5,.5,.5]) 
+    generatePrimative("wall4",[-3.5,-1.5,makerX],"cinderblockNot.png",[.5,.5,.5]) 
   }
       generatePrimative("plane",[0,0,0],"cobblestoneNot.png",[3,1,3]);  
-  generatePrimative("cube",[0,-2,0],"cinderblockNott.png",[.5,.5,.5])
+  generatePrimative("cube",[0,-2,0],"cobblestonenewnew.png",[.5,.5,.5])
     //}
   //}
   
