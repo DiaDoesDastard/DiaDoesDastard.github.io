@@ -12,6 +12,7 @@ function gameObject(textureURL = "", uvCoordanates = [[0,0]],  vertices=[[0,0,0]
   this.objectType = objectType;
   this.maxHealth = maxHealth;
   this.currentHealth = currentHealth;
+  this.objectID = 0
   this.imageToTexture = function(imageSource){
     const image = new Image;
 
@@ -25,5 +26,6 @@ function gameObject(textureURL = "", uvCoordanates = [[0,0]],  vertices=[[0,0,0]
   this.imageToTexture(textureURL)
   generateNormals(this)
   objectList.push(this);
+  this.objectID = objectList.length-1
 }
 

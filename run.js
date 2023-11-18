@@ -1,9 +1,9 @@
 start()
 setInterval(play,1000/60); 
 //play()
-
-const littleGuy = new spriteHandler("notlavender.png",[0,-4,0])
-
+var moveCounter = 0
+const littleGuy = new spriteHandler("evilwizard1Not.png",[1,-2,1])
+const movingBox = generatePrimative("cube",[-1,-2,-1],"cobblestonenewnew.png",[.5,.5,.5])
 function start(){
   //loadFromTilemap(0)
   /*
@@ -53,6 +53,7 @@ function start(){
 }
 
 function play(){
+  moveCounter += .1
   rotationMatrix = generateRotationMatrix(mainRho,mainPhi);
   toCameraVector = [Math.sin(Math.PI * mainRho / 180),
                     Math.sin(Math.PI * mainPhi / 180),
@@ -61,6 +62,7 @@ function play(){
                     Math.sin(Math.PI * sunPhi / 180),
                     Math.cos(Math.PI * sunRho / 180)]
   littleGuy.faceCam()
+  objectList[movingBox.objectID].position = [-1,-2,2*Math.sin(moveCounter)]
   for(e = 0; e<objectList.length; e++){
     bufferObject(objectList[e], e, rotationMatrix, occlusionMask, offset);
   }  
@@ -93,7 +95,6 @@ document.onkeypress = function(evt) {
     }
     if(charStr == "e"){
       mainRho += 1;
-      console.log(mainRho)
     }
     if(charStr == "q"){
       mainRho -= 1;
