@@ -5,7 +5,7 @@ const ySize = canvas.height;
 var rotationMatrix = new Array(3,3);
 
 var offset = [0,0,0];
-var scaling = 60;
+var scaling = 120;
 var mainRho = 45;
 var mainPhi = 20;
 
