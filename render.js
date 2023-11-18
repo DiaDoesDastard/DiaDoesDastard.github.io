@@ -6,7 +6,7 @@ var rotationMatrix = new Array(3,3);
 
 var offset = [0,0,0];
 var scaling = 60;
-var mainRho = 45;
+var mainRho = 135;
 var mainPhi = 20;
 
 var sunRho  = 225;
