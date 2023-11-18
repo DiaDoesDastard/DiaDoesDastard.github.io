@@ -42,6 +42,7 @@ function start(){
   }
       generatePrimative("plane",[0,0,0],"cobblestoneNot.png",[3,1,3]);  
   generatePrimative("cube",[0,-2,0],"cobblestonenewnew.png",[.5,.5,.5])
+  generatePrimative("wall4",[-3.9,-1.5,0],"doorNot.png",[1,0.5,0.5])
     //}
   //}
   

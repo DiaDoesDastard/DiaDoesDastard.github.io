@@ -169,7 +169,7 @@ function generatePrimative(type, position, imageURL = "lavender.png", scale=[1,1
         [[[0,0],[39,0],[39,39]],[[0,0],[39,0],[39,39]]],                
         [[1,-1,1],[-1,-1,1],[-.5,-.5,-.5],[.5,-.5,-.5],
          [1,1,1],[-1,1,1],[-.5,.5,-.5],[.5,.5,-.5]],
-        [[0,4,5],[5,1,0]],
+        [[4,5,1],[1,0,4]],
         position,scale);
   }
   if(type.toLowerCase() == "wall2"){
@@ -177,7 +177,7 @@ function generatePrimative(type, position, imageURL = "lavender.png", scale=[1,1
         [[[0,0],[39,0],[39,39]],[[0,0],[39,0],[39,39]]],                
         [[.5,-.5,.5],[-.5,-.5,.5],[-1,-1,-1],[1,-1,-1],
          [.5,.5,.5],[-.5,.5,.5],[-1,1,-1],[1,1,-1]],
-        [[2,6,7],[7,3,2]],
+        [[6,7,3],[3,2,6]],
         position,scale);
   }
   if(type.toLowerCase() == "wall3"){
@@ -185,7 +185,7 @@ function generatePrimative(type, position, imageURL = "lavender.png", scale=[1,1
                           [[[0,0],[39,0],[39,39]],[[0,0],[39,0],[39,39]]],                
         [[.5,-.5,.5],[-1,-1,1],[-1,-1,-1],[.5,-.5,-.5],
          [.5,.5,.5],[-1,1,1],[-1,1,-1],[.5,.5,-.5]],
-        [[1,5,6],[6,2,1]],
+        [[5,6,2],[2,1,5]],
         position,scale);
   }
   if(type.toLowerCase() == "wall4"){
