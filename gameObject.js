@@ -8,6 +8,7 @@ function gameObject(textureURL = "", uvCoordanates = [[0,0]],  vertices=[[0,0,0]
   this.normals = [[0,0,0]]; 
   this.uvCoordanates = uvCoordanates; 
   this.textureMap = [255,255,255,255];
+  this.textureSize = 0
   this.objectType = objectType;
   this.maxHealth = maxHealth;
   this.currentHealth = currentHealth;
@@ -18,10 +19,9 @@ function gameObject(textureURL = "", uvCoordanates = [[0,0]],  vertices=[[0,0,0]
     image.onload = () => {
       ctx.drawImage(image, 0, 0);
       this.textureMap = ctx.getImageData(0, 0, 80, 80).data
+      this.textureSize = image.width
     }
   }
-  
-  
   this.imageToTexture(textureURL)
   generateNormals(this)
   objectList.push(this);
