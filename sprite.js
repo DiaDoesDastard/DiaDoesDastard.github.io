@@ -10,7 +10,7 @@ function spriteHandler(
   this.objectID = 0
 
   gameObject(spriteTexture, 
-            [[[0,0],[39,0],[39,39]],[[0,0],[0,39],[39,39]]],
+            [[[0,0],[79,0],[79,79]],[[0,0],[79,0],[79,79]]],
             [[radius,0,0],[-radius,0,0],[radius,height,0],[-radius,height,0]],
             [[2,3,1],[1,0,2]],position)
   this.objectID = objectList.length - 1
