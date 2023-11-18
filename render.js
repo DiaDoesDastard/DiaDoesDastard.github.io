@@ -9,9 +9,9 @@ var scaling = 60;
 var mainRho = 45;
 var mainPhi = 20;
 
-var sunRho  = 45;
+var sunRho  = 225;
 var sunPhi = 10;
-var ambientLight = 60;
+var ambientLight = 30;
 var sunVector = [0,0,0]
 var sunColor = [255,255,255]
 

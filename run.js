@@ -100,4 +100,11 @@ document.onkeypress = function(evt) {
     if(charStr == "f"){
       scaling -= 1;
     }
+  if(charStr == "z"){
+    sunRho += 1;
+  }
+  if(charStr == "c"){
+    sunRho -= 1;
+  }
+  
 };
