@@ -1,6 +1,5 @@
 
-function gameObject(textureURL = "", uvCoordanates = [[0,0]],  vertices=[[0,0,0]], triangles=[[0]], objectType = "tile",
-  position=[0,0,0],rotation=[0,0,0], maxHealth = -1, currentHealth = maxHealth){
+function gameObject(textureURL = "", uvCoordanates = [[0,0]],  vertices=[[0,0,0]], triangles=[[0]],position=[0,0,0],objectType = "tile",rotation=[0,0,0], maxHealth = -1, currentHealth = maxHealth){
   this.position = position;
   this.rotation = rotation;
   this.vertices = vertices; 

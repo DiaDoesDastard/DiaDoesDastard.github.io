@@ -85,8 +85,6 @@ function rotatePoints(position,rotationalMatrix, offsets = [0,0,0]){
 
 function bufferObject(hostObject, objectID, rotationalMatrix, chosenMask, offsets = [0,0,0]){
   var tempVertices = new Array(hostObject.vertices.length);
-  var lightCalcHolder = [0,0,0]
-  var lightCos = 0
   for(i=0; i<tempVertices.length; i++){
     tempVertices[i] = 
       rotatePoints([hostObject.vertices[i][0]*scaling+hostObject.position[0]*scaling,
@@ -104,8 +102,7 @@ function bufferObject(hostObject, objectID, rotationalMatrix, chosenMask, offset
                   tempVertices[hostObject.triangles[i][2]], 
                   objectID,
                   i,
-                  chosenMask,
-                  lightCalcHolder);      
+                  chosenMask);      
     }    
   }
 }
@@ -176,7 +173,7 @@ function generatePrimative(type, position, imageURL = "lavender.png"){
   }
 }
 
-function drawTriangle(pointA,pointB,pointC,objectID,triangleID,targetMask,lightLevel){
+function drawTriangle(pointA,pointB,pointC,objectID,triangleID,targetMask){
   var depth = 0
 
   var abVector = [pointB[0]-pointA[0],pointB[1]-pointA[1],pointB[2]-pointA[2]];
@@ -200,7 +197,7 @@ function drawTriangle(pointA,pointB,pointC,objectID,triangleID,targetMask,lightL
 
 
       if(0<targetPoint[0]&&targetPoint[0]<xSize&&0<targetPoint[1]&&targetPoint[1]<ySize){
-        depth = pointA[2]*1+abScalar*abVector[2]+acScalar*acVector[2]
+        depth = pointA[2]+abScalar*abVector[2]+acScalar*acVector[2]
         imageIndices = (targetPoint[1]*xSize+targetPoint[0])*4
         if(targetMask[imageIndices + 0][2] > depth || targetMask[imageIndices + 1] == -1){
             targetMask[imageIndices + 0] = [abScalar,acScalar,depth];

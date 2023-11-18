@@ -5,9 +5,9 @@ setInterval(play,1000/60);
 function start(){
   //loadFromTilemap(0)
   
-  for(h=-5;h<5;h++){
-    for(g=-5;g<5;g++){
-      generatePrimative("plane",[2*h,0,2*g]);      
+  for(makerX=-3;makerX<3;makerX++){
+    for(makerY=-3;makerY<3;makerY++){
+      generatePrimative("plane",[2*makerX,0,2*makerY],"cobblestoneNot.png");      
     }
   }
   
@@ -57,9 +57,9 @@ document.onkeypress = function(evt) {
       mainRho -= 1;
     }
     if(charStr == "r"){
-      mainPhi += 1;
+      scaling += 1;
     }
     if(charStr == "f"){
-      mainPhi -= 1;
+      scaling -= 1;
     }
 };
