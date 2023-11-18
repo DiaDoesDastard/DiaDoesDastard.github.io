@@ -8,12 +8,12 @@ function displayObject(_gameObject){
             return "Entity Hit Points " + _gameObject.currentHealth + "/" + _gameObject.maxHealth; 
             //}
     }
-    // else if()
-    // {
-
-    // }
-    // else
-    // {
-
-    // }
+    else if(_gameObject.objectType == "tile")
+    {
+            return "Tile " + _gameObject;
+    }
+    else
+    {
+            return "nothing is selected"
+    }
 }
