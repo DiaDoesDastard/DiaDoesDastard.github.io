@@ -199,9 +199,9 @@ function renderScreen(){
   }
 }
 
-function generatePrimative(type, position){
+function generatePrimative(type, position, imageURL = "lavender.png"){
   if(type.toLowerCase() == "cube"){
-    return new gameObject("lavender.png",
+    return new gameObject(imageURL,
         [[[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
         [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
         [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
@@ -215,7 +215,7 @@ function generatePrimative(type, position){
         position);
   }
   if(type.toLowerCase() == "plane"){
-    return new gameObject("lavender.png",
+    return new gameObject(imageURL,
                           [[[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]]],
                           [[1,-1,1],[-1,-1,1],[-1,-1,-1],[1,-1,-1]],
                           [[0,1,2],[2,3,0]],
