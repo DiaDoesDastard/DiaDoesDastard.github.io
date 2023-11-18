@@ -9,8 +9,8 @@ var scaling = 60;
 var mainRho = 45;
 var mainPhi = 20;
 
-var sunRho  = 0;
-var sunPhi = 0;
+var sunRho  = 45;
+var sunPhi = 10;
 var ambientLight = 60;
 var sunVector = [0,0,0]
 var sunColor = [255,255,255]
@@ -108,8 +108,17 @@ function bufferObject(hostObject, objectID, rotationalMatrix, chosenMask, offset
       if((hostObject.normals[i][2] * sunVector[2] > 0) || 
         (hostObject.normals[i][1] * sunVector[1] > 0) ||
         (hostObject.normals[i][0] * sunVector[0] > 0)){
-        
-        lightLevels = [sunColor[0]/255,sunColor[1]/255,sunColor[2]/255]
+        sunCos = (hostObject.normals[i][2]*sunVector[2]+
+                 hostObject.normals[i][1]*sunVector[1]+
+                 hostObject.normals[i][0]*sunVector[0])
+        sunCos = sunCos/(Math.sqrt(hostObject.normals[i][2]**2+
+                                   hostObject.normals[i][1]**2+
+                                  hostObject.normals[i][0]**2)*
+                        Math.sqrt(sunVector[2]**2+
+                                 sunVector[1]**2+
+                                 sunVector[0]**2))
+        sunCos = (Math.PI-(Math.acos(sunCos)))/Math.PI
+        lightLevels = [sunCos*sunColor[0]/255,sunCos*sunColor[1]/255,sunCos*sunColor[2]/255]
       }else{
         lightLevels = [ambientLight/255,ambientLight/255,ambientLight/255]
       }
