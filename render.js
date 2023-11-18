@@ -138,6 +138,9 @@ function renderScreen(){
 }
 
 function generatePrimative(type, position, imageURL = "lavender.png"){
+  if(imageURL == ""){
+    imageURL = "lavender.png"
+  }
   if(type.toLowerCase() == "cube"){
     return new gameObject(imageURL,
         [[[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
@@ -158,6 +161,18 @@ function generatePrimative(type, position, imageURL = "lavender.png"){
                           [[1,-1,1],[-1,-1,1],[-1,-1,-1],[1,-1,-1]],
                           [[0,1,2],[2,3,0]],
                           position);
+  }
+  if(type.toLowerCase() == "wall"){
+    return new gameObject(imageURL,
+        [[[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
+        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
+        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
+        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]]],                
+        [[1,-1,1],[-1,-1,1],[-1,-1,-1],[1,-1,-1],
+         [1,1,1],[-1,1,1],[-1,1,-1],[1,1,-1]],
+        [[0,4,5],[5,1,0],[2,6,7],[7,3,2],
+         [1,5,6],[6,2,1],[7,4,0],[0,3,7]],
+        position);
   }
 }
 

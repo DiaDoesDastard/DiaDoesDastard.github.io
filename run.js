@@ -3,12 +3,14 @@ setInterval(play,1000/60);
 //play()
 
 function start(){
+  loadFromTilemap(0)
+  /*
   for(h=-5;h<5;h++){
     for(g=-5;g<5;g++){
       generatePrimative("plane",[2*h,0,2*g]);      
     }
   }
-
+  */
 
 }
 
