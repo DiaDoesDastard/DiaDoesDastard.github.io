@@ -6,13 +6,11 @@ function gameObject(position = [0,0,0], vertices = [[2,2,2]], triangles = [[0]],
   this.vertices = vertices
   this.normals = []
   this.objectType = objectType;
-  this.maxHealth = -1
-  this.currentHealth = -1
 
 
    if(objectType = "enemy"){
-      this.maxHealth = 10;
-      this.currentHealth = 8;
+      var maxHealth = 10;
+      var currentHealth = 8;
    }
   
   
@@ -25,13 +23,13 @@ function gameObject(position = [0,0,0], vertices = [[2,2,2]], triangles = [[0]],
       //console.log(triangleCounter)
       //console.log(triangles[triangleCounter][1])
       //console.log(vertices[triangles[triangleCounter][1]])
-      ab[0] = vertices[triangles[triangleCounter][1]][0]-vertices[triangles[triangleCounter][0]][0]
-      ab[1] = vertices[triangles[triangleCounter][1]][1]-vertices[triangles[triangleCounter][0]][1]
-      ab[2] = vertices[triangles[triangleCounter][1]][2]-vertices[triangles[triangleCounter][0]][2]
+      ab[0] = this.vertices[this.triangles[triangleCounter][1]][0]-this.vertices[this.triangles[triangleCounter][0]][0]
+      ab[1] = this.vertices[this.triangles[triangleCounter][1]][1]-this.vertices[this.triangles[triangleCounter][0]][1]
+      ab[2] = this.vertices[this.triangles[triangleCounter][1]][2]-this.vertices[this.triangles[triangleCounter][0]][2]
       
-      ac[0] = vertices[triangles[triangleCounter][2]][0]-vertices[triangles[triangleCounter][0]][0]
-      ac[1] = vertices[triangles[triangleCounter][2]][1]-vertices[triangles[triangleCounter][0]][1]
-      ac[2] = vertices[triangles[triangleCounter][2]][2]-vertices[triangles[triangleCounter][0]][2]
+      ac[0] = this.vertices[this.triangles[triangleCounter][2]][0]-this.vertices[this.triangles[triangleCounter][0]][0]
+      ac[1] = this.vertices[this.triangles[triangleCounter][2]][1]-this.vertices[this.triangles[triangleCounter][0]][1]
+      ac[2] = this.vertices[this.triangles[triangleCounter][2]][2]-this.vertices[this.triangles[triangleCounter][0]][2]
 
       //console.log(ab)
       //console.log(ac)
