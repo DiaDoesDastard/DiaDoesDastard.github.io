@@ -6,11 +6,13 @@ function gameObject(position = [0,0,0], vertices = [[2,2,2]], triangles = [[0]],
   this.vertices = vertices
   this.normals = []
   this.objectType = objectType;
+  this.maxHealth = -1
+  this.currentHealth = -1
 
 
    if(objectType = "enemy"){
-      var maxHealth = 10;
-      var currentHealth = 8;
+      this.maxHealth = 10;
+      this.currentHealth = 8;
    }
   
   
