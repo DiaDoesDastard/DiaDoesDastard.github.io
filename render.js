@@ -9,6 +9,12 @@ var scaling = 60;
 var mainRho = 45;
 var mainPhi = 20;
 
+var sunRho  = 0;
+var sunPhi = 0;
+var ambientLight = 60;
+var sunVector = [0,0,0]
+var sunColor = [255,255,255]
+
 const occlusionMask = new Array((xSize*ySize*4));
 occlusionMask.fill(-1);
 
@@ -85,6 +91,8 @@ function rotatePoints(position,rotationalMatrix, offsets = [0,0,0]){
 
 function bufferObject(hostObject, objectID, rotationalMatrix, chosenMask, offsets = [0,0,0]){
   var tempVertices = new Array(hostObject.vertices.length);
+  var lightLevels = [0,0,0]
+  var sunCos = 0
   for(i=0; i<tempVertices.length; i++){
     tempVertices[i] = 
       rotatePoints([hostObject.vertices[i][0]*scaling*hostObject.scale[0]+hostObject.position[0]*scaling,
@@ -97,12 +105,21 @@ function bufferObject(hostObject, objectID, rotationalMatrix, chosenMask, offset
     if((hostObject.normals[i][2] * toCameraVector[2] > 0) || 
       (hostObject.normals[i][1] * toCameraVector[1] > 0) ||
       (hostObject.normals[i][0] * toCameraVector[0] > 0)){
+      if((hostObject.normals[i][2] * sunVector[2] > 0) || 
+        (hostObject.normals[i][1] * sunVector[1] > 0) ||
+        (hostObject.normals[i][0] * sunVector[0] > 0)){
+        
+        lightLevels = [sunColor[0]/255,sunColor[1]/255,sunColor[2]/255]
+      }else{
+        lightLevels = [ambientLight/255,ambientLight/255,ambientLight/255]
+      }
       drawTriangle(tempVertices[hostObject.triangles[i][0]],
                   tempVertices[hostObject.triangles[i][1]],
                   tempVertices[hostObject.triangles[i][2]], 
                   objectID,
                   i,
-                  chosenMask);      
+                  chosenMask,
+                  lightLevels);      
     }    
   }
 }
@@ -117,6 +134,7 @@ function renderScreen(){
   var targetIJ = 0
   var uvCoords = 0
   var triangleID = 0
+  var lightLevels = [0,0,0]
   for(i=0; i<imageArrays.length;i += 4){
     var xPos = i%xSize
     var yPos = Math.floor((i-xPos)/xSize)
@@ -124,6 +142,7 @@ function renderScreen(){
       targetObject = objectList[occlusionMask[i + 1]]
       targetIJ = occlusionMask[i + 0]
       uvCoords = targetObject.uvCoordanates[occlusionMask[i + 2]]
+      lightLevels = occlusionMask[i + 3]
       if(occlusionMask[i + 2]%2==0){
         targetIJ = [1-targetIJ[0],1-targetIJ[1]]
       }
@@ -131,9 +150,9 @@ function renderScreen(){
 
       vCoord = roundNumber((uvCoords[1][1]*targetIJ[0]+uvCoords[2][1]*targetIJ[1]))
       textureCoord = (vCoord*objectList[occlusionMask[i + 1]].textureSize+uCoord)*4
-      imageArrays[i + 0] = targetObject.textureMap[textureCoord + 0]; // R value
-      imageArrays[i + 1] = targetObject.textureMap[textureCoord + 1]; // G value
-      imageArrays[i + 2] = targetObject.textureMap[textureCoord + 2]; // B value
+      imageArrays[i + 0] = lightLevels[0]*targetObject.textureMap[textureCoord + 0]; // R value
+      imageArrays[i + 1] = lightLevels[1]*targetObject.textureMap[textureCoord + 1]; // G value
+      imageArrays[i + 2] = lightLevels[2]*targetObject.textureMap[textureCoord + 2]; // B value
       imageArrays[i + 3] = 255; // A value
     }
   }
@@ -198,7 +217,7 @@ function generatePrimative(type, position, imageURL = "lavender.png", scale=[1,1
   }
 }
 
-function drawTriangle(pointA,pointB,pointC,objectID,triangleID,targetMask){
+function drawTriangle(pointA,pointB,pointC,objectID,triangleID,targetMask, lightLevel){
   var depth = 0
 
   var abVector = [pointB[0]-pointA[0],pointB[1]-pointA[1],pointB[2]-pointA[2]];
@@ -228,7 +247,8 @@ function drawTriangle(pointA,pointB,pointC,objectID,triangleID,targetMask){
         if(targetMask[imageIndices + 0][2] > depth || targetMask[imageIndices + 1] == -1){
             targetMask[imageIndices + 0] = [abScalar,acScalar,depth];
             targetMask[imageIndices + 1] = objectID;
-            targetMask[imageIndices + 2] = triangleID;  
+            targetMask[imageIndices + 2] = triangleID;
+            targetMask[imageIndices + 3] = lightLevel;
         }
       }
     }

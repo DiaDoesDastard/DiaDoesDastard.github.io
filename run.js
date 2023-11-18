@@ -54,6 +54,9 @@ function play(){
   toCameraVector = [Math.sin(Math.PI * mainRho / 180),
                     Math.sin(Math.PI * mainPhi / 180),
                     Math.cos(Math.PI * mainRho / 180)]
+  sunVector = [Math.sin(Math.PI * sunRho / 180),
+                    Math.sin(Math.PI * sunPhi / 180),
+                    Math.cos(Math.PI * sunRho / 180)]
 
   for(e = 0; e<objectList.length; e++){
     bufferObject(objectList[e], e, rotationMatrix, occlusionMask, offset);
