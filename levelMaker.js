@@ -26,9 +26,9 @@ tilemap = [
 
 function loadFromTilemap(lastObjectID){
     for(var tileX = 0; tileX<tilemap.length; tileX++){
-      for(var tileY = 0; tileY<tilemap.length[tileX]; tileY++){
-        tilemap[tileX,tileY][0] = (lastObjectID+tileY+tileX*tilemap.length)
-        generatePrimative(tilemap[tileX,tileY][2],[tileX*2,0,tileY*2],tilemap[tileX,tileY][1])
+      for(var tileY = 0; tileY<tilemap.length; tileY++){
+        tilemap[tileX,tileY][0] = (lastObjectID+tileX+tileY*tilemap)
+        generatePrimative(tilemap[tileX,tileY][2],[tileX,0,tileY],tilemap[tileX,tileY][1])
       }
     }
 }

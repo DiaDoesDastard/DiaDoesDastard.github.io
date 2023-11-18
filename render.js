@@ -117,6 +117,8 @@ function renderScreen(){
   var targetIJ = 0
   var uvCoords = 0
   for(i=0; i<imageArrays.length;i += 4){
+    var xPos = i%xSize
+    var yPos = Math.floor((i-xPos)/xSize)
     if(occlusionMask[i + 1] >= 0){
       targetObject = objectList[occlusionMask[i + 1]]
       targetIJ = occlusionMask[i + 0]
@@ -192,18 +194,19 @@ function drawTriangle(pointA,pointB,pointC,objectID,triangleID,targetMask){
   for(abScalar = 0; abScalar<=1; abScalar += (1/Math.floor(abDistance*resolution))){
     for(acScalar = 0; acScalar+abScalar<=1; acScalar += (1/Math.floor(acDistance*resolution))){
 
-      targetPoint = [Math.floor(pointA[0]+abScalar*abVector[0]+acScalar*acVector[0]),
-                     Math.floor(pointA[1]+abScalar*abVector[1]+acScalar*acVector[1])]
+      targetPoint = [Math.floor((pointA[0]+abScalar*abVector[0]+acScalar*acVector[0])),
+                     Math.floor((pointA[1]+abScalar*abVector[1]+acScalar*acVector[1]))]
 
 
       if(0<targetPoint[0]&&targetPoint[0]<xSize&&0<targetPoint[1]&&targetPoint[1]<ySize){
+        //for(jk = 0; jk<4)
         depth = pointA[2]+abScalar*abVector[2]+acScalar*acVector[2]
         imageIndices = (targetPoint[1]*xSize+targetPoint[0])*4
         if(targetMask[imageIndices + 0][2] > depth || targetMask[imageIndices + 1] == -1){
             targetMask[imageIndices + 0] = [abScalar,acScalar,depth];
             targetMask[imageIndices + 1] = objectID;
             targetMask[imageIndices + 2] = triangleID;  
-        }    
+        }
       }
     }
   }

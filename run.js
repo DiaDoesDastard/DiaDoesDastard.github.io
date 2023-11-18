@@ -5,8 +5,8 @@ setInterval(play,1000/60);
 function start(){
   //loadFromTilemap(0)
   
-  for(makerX=-3;makerX<3;makerX++){
-    for(makerY=-3;makerY<3;makerY++){
+  for(makerX=-2;makerX<2;makerX++){
+    for(makerY=-2;makerY<2;makerY++){
       generatePrimative("plane",[2*makerX,0,2*makerY],"cobblestoneNot.png");      
     }
   }
