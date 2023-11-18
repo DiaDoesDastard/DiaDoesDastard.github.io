@@ -5,7 +5,7 @@ const ySize = canvas.height;
 var rotationMatrix = new Array(3,3);
 
 var offset = [0,0,0];
-var scaling = 120;
+var scaling = 60;
 var mainRho = 45;
 var mainPhi = 20;
 
@@ -87,9 +87,9 @@ function bufferObject(hostObject, objectID, rotationalMatrix, chosenMask, offset
   var tempVertices = new Array(hostObject.vertices.length);
   for(i=0; i<tempVertices.length; i++){
     tempVertices[i] = 
-      rotatePoints([hostObject.vertices[i][0]*scaling+hostObject.position[0]*scaling,
-                    hostObject.vertices[i][1]*scaling+hostObject.position[1]*scaling,
-                    hostObject.vertices[i][2]*scaling+hostObject.position[2]*scaling],
+      rotatePoints([hostObject.vertices[i][0]*scaling*hostObject.scale[0]+hostObject.position[0]*scaling,
+                    hostObject.vertices[i][1]*scaling*hostObject.scale[1]+hostObject.position[1]*scaling,
+                    hostObject.vertices[i][2]*scaling*hostObject.scale[2]+hostObject.position[2]*scaling],
                   rotationalMatrix,
                   offsets);
   }
@@ -124,9 +124,9 @@ function renderScreen(){
       targetIJ = occlusionMask[i + 0]
       uvCoords = targetObject.uvCoordanates[occlusionMask[i + 2]]
       
-      uCoord = roundNumber(uvCoords[1][0]*targetIJ[0]+uvCoords[2][0]*targetIJ[1])
+      uCoord = roundNumber((uvCoords[1][0]*targetIJ[0]+uvCoords[2][0]*targetIJ[1]))
 
-      vCoord = roundNumber(uvCoords[1][1]*targetIJ[0]+uvCoords[2][1]*targetIJ[1])
+      vCoord = roundNumber((uvCoords[1][1]*targetIJ[0]+uvCoords[2][1]*targetIJ[1]))
       textureCoord = (vCoord*80+uCoord)*4
       imageArrays[i + 0] = targetObject.textureMap[textureCoord + 0]; // R value
       imageArrays[i + 1] = targetObject.textureMap[textureCoord + 1]; // G value
@@ -136,7 +136,7 @@ function renderScreen(){
   }
 }
 
-function generatePrimative(type, position, imageURL = "lavender.png"){
+function generatePrimative(type, position, imageURL = "lavender.png", scale=[1,1,1]){
   if(imageURL == ""){
     imageURL = "lavender.png"
   }
@@ -148,18 +148,18 @@ function generatePrimative(type, position, imageURL = "lavender.png"){
         [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
         [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
         [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]]],                
-        [[1,-1,1],[-1,-1,1],[-1,-1,-1],[1,-1,-1],
-         [1,1,1],[-1,1,1],[-1,1,-1],[1,1,-1]],
+                          [[.5,-.5,.5],[-.5,-.5,.5],[-.5,-.5,-.5],[.5,-.5,-.5],
+                             [.5,.5,.5],[-.5,.5,.5],[-.5,.5,-.5],[.5,.5,-.5]],
         [[0,1,2],[2,3,0],[6,5,4],[4,7,6],[0,4,5],[5,1,0],
          [2,6,7],[7,3,2],[1,5,6],[6,2,1],[7,4,0],[0,3,7]],
-        position);
+        position,scale);
   }
   if(type.toLowerCase() == "plane"){
     return new gameObject(imageURL,
                           [[[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]]],
                           [[1,-1,1],[-1,-1,1],[-1,-1,-1],[1,-1,-1]],
                           [[0,1,2],[2,3,0]],
-                          position);
+                          position,scale);
   }
   if(type.toLowerCase() == "wall"){
     return new gameObject(imageURL,
@@ -167,11 +167,52 @@ function generatePrimative(type, position, imageURL = "lavender.png"){
         [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
         [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
         [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]]],                
-        [[1,-1,1],[-1,-1,1],[-1,-1,-1],[1,-1,-1],
-         [1,1,1],[-1,1,1],[-1,1,-1],[1,1,-1]],
+        [[.5,-.5,.5],[-.5,-.5,.5],[-.5,-.5,-.5],[.5,-.5,-.5],
+         [.5,.5,.5],[-.5,.5,.5],[-.5,.5,-.5],[.5,.5,-.5]],
         [[0,4,5],[5,1,0],[2,6,7],[7,3,2],
          [1,5,6],[6,2,1],[7,4,0],[0,3,7]],
-        position);
+        position,scale);
+  }
+  if(type.toLowerCase() == "wall1"){
+    return new gameObject(imageURL,
+        [[[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
+        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
+        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
+        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]]],                
+        [[1,-1,1],[-1,-1,1],[-.5,-.5,-.5],[.5,-.5,-.5],
+         [1,1,1],[-1,1,1],[-.5,.5,-.5],[.5,.5,-.5]],
+        [[0,4,5],[5,1,0]],
+        position,scale);
+  }
+  if(type.toLowerCase() == "wall2"){
+    return new gameObject(imageURL,
+        [[[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]]],                
+        [[.5,-.5,.5],[-.5,-.5,.5],[-1,-1,-1],[1,-1,-1],
+         [.5,.5,.5],[-.5,.5,.5],[-1,1,-1],[1,1,-1]],
+        [[2,6,7],[7,3,2]],
+        position,scale);
+  }
+  if(type.toLowerCase() == "wall3"){
+    return new gameObject(imageURL,
+        [[[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
+        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
+        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
+        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]]],                
+        [[.5,-.5,.5],[-1,-1,1],[-1,-1,-1],[.5,-.5,-.5],
+         [.5,.5,.5],[-1,1,1],[-1,1,-1],[.5,.5,-.5]],
+        [[1,5,6],[6,2,1]],
+        position,scale);
+  }
+  if(type.toLowerCase() == "wall4"){
+    return new gameObject(imageURL,
+        [[[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
+        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
+        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]],
+        [[0,0],[79,0],[79,79]],[[0,0],[0,79],[79,79]]],                
+        [[1,-1,1],[-1,-1,1],[-1,-1,-1],[1,-1,-1],
+         [1,1,1],[-1,1,1],[-1,1,-1],[1,1,-1]],
+        [[7,4,0],[0,3,7]],
+        position,scale);
   }
 }
 

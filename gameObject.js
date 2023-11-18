@@ -1,8 +1,9 @@
 
-function gameObject(textureURL = "", uvCoordanates = [[0,0]],  vertices=[[0,0,0]], triangles=[[0]],position=[0,0,0],objectType = "tile",rotation=[0,0,0], maxHealth = -1, currentHealth = maxHealth){
+function gameObject(textureURL = "", uvCoordanates = [[0,0]],  vertices=[[0,0,0]], triangles=[[0]],position=[0,0,0],scale=[1,1,1],objectType = "tile",rotation=[0,0,0], maxHealth = -1, currentHealth = maxHealth){
   this.position = position;
   this.rotation = rotation;
   this.vertices = vertices; 
+  this.scale = scale;
   this.triangles = triangles; 
   this.normals = [[0,0,0]]; 
   this.uvCoordanates = uvCoordanates; 
@@ -19,6 +20,8 @@ function gameObject(textureURL = "", uvCoordanates = [[0,0]],  vertices=[[0,0,0]
       this.textureMap = ctx.getImageData(0, 0, 80, 80).data
     }
   }
+  
+  
   this.imageToTexture(textureURL)
   generateNormals(this)
   objectList.push(this);
