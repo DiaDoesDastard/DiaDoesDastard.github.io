@@ -3,6 +3,7 @@ setInterval(play,1000/60);
 //play()
 var moveCounter = 0
 const littleGuy = new spriteHandler("evilwizard1Not.png",[1,-2,1])
+const bigGuy = new spriteHandler("wizard1Not.png",[1,-2,1])
 const movingBox = generatePrimative("cube",[-1,-2,-1],"SpriteA.png",[.5,.5,.5])
 //uuuuu
 function start(){
@@ -45,7 +46,8 @@ function start(){
   }
       generatePrimative("plane",[0,0,0],"cobblestoneNot.png",[3,1,3]);  
   generatePrimative("cube",[0,-2,0],"cobblestonenewnew.png",[.5,.5,.5])
-  generatePrimative("wall4",[-3.9,-1.5,0],"doorNot.png",[1,0.5,0.5])
+  generatePrimative("wall4",[-3.95,-1.5,0],"doorNot.png",[1,0.5,0.5])
+  generatePrimative("wall3",[3.95,-2,0],"cinderblockWITHchainsENDNot.png",[1,1,0.5])
   
     //}
   //}
@@ -63,6 +65,7 @@ function play(){
                     Math.sin(Math.PI * sunPhi / 180),
                     Math.cos(Math.PI * sunRho / 180)]
   littleGuy.faceCam()
+  bigGuy.faceCam()
   objectList[movingBox.objectID].position = [-1,-2,2*Math.sin(moveCounter)]
   for(e = 0; e<objectList.length; e++){
     bufferObject(objectList[e], e, rotationMatrix, occlusionMask, offset);
