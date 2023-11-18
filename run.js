@@ -4,6 +4,7 @@ setInterval(play,1000/60);
 var moveCounter = 0
 const littleGuy = new spriteHandler("evilwizard1Not.png",[1,-2,1])
 const movingBox = generatePrimative("cube",[-1,-2,-1],"Sprite-0001.png",[.5,.5,.5])
+//uuuuu
 function start(){
   //loadFromTilemap(0)
   /*
